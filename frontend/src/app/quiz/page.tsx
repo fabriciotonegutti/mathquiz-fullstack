@@ -42,13 +42,22 @@ export default function QuizPage() {
     const fetchQuestions = async () => {
       setIsLoading(true);
       try {
-        // Use environment variable if available, otherwise use relative path
+        // Use environment variable if available, otherwise use the deployed backend URL
         const apiUrl = process.env.NEXT_PUBLIC_API_URL 
           ? `${process.env.NEXT_PUBLIC_API_URL}/quiz/start` 
-          : '/api/quiz/start';
+          : 'https://mathquiz-backend.onrender.com/api/quiz/start';
         
         console.log('Fetching quiz questions from:', apiUrl);
-        const response = await fetch(apiUrl);
+        const response = await fetch(apiUrl, { 
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          // Include credentials if needed for cookies
+          // credentials: 'include',
+          // Add CORS mode
+          mode: 'cors',
+        });
         
         if (!response.ok) {
           console.error(`API request failed with status ${response.status}`);

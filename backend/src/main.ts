@@ -6,7 +6,7 @@ async function bootstrap() {
   
   // Enable CORS to allow frontend to make requests
   app.enableCors({
-    origin: '*', // Allow all origins for testing
+    origin: process.env.CORS_ORIGIN || '*', // Use environment variable or allow all
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });

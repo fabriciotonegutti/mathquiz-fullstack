@@ -42,8 +42,13 @@ export default function QuizPage() {
     const fetchQuestions = async () => {
       setIsLoading(true);
       try {
-        console.log('Fetching quiz questions from: /api/quiz/start');
-        const response = await fetch('/api/quiz/start');
+        // Use environment variable if available, otherwise use relative path
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL 
+          ? `${process.env.NEXT_PUBLIC_API_URL}/quiz/start` 
+          : '/api/quiz/start';
+        
+        console.log('Fetching quiz questions from:', apiUrl);
+        const response = await fetch(apiUrl);
         
         if (!response.ok) {
           console.error(`API request failed with status ${response.status}`);
